@@ -1,0 +1,72 @@
+unit dmDados;
+
+interface
+
+uses
+  System.SysUtils, System.Classes, FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Error, FireDAC.UI.Intf,
+  FireDAC.Phys.Intf, FireDAC.Stan.Def, FireDAC.Stan.Pool, FireDAC.Stan.Async, FireDAC.Phys, FireDAC.VCLUI.Wait,
+  FireDAC.Stan.Param, FireDAC.DatS, FireDAC.DApt.Intf, FireDAC.DApt, Data.DB, FireDAC.Comp.DataSet, FireDAC.Comp.Client,
+  FireDAC.Phys.SQLite, FireDAC.Phys.SQLiteDef, FireDAC.Stan.ExprFuncs, FireDAC.Phys.MSSQL, FireDAC.Phys.MSSQLDef;
+
+type
+  TdmDesbravador = class(TDataModule)
+    DataSource_Desbravador: TDataSource;
+    conDesbravador: TFDConnection;
+    FDQueryDesbravador: TFDQuery;
+    DataSource_Unidades: TDataSource;
+    conUnidades: TFDConnection;
+    FDQueryUnidades: TFDQuery;
+    DataSource_Classes: TDataSource;
+    conClasses: TFDConnection;
+    FDQueryClasses: TFDQuery;
+    DataSource_Especialidades: TDataSource;
+    FDQueryEspecialidades: TFDQuery;
+    conEspecialidades: TFDConnection;
+    procedure DataSource_DesbravadorDataChange(Sender: TObject; Field: TField);
+    procedure DataSource_EspecialidadesDataChange(Sender: TObject; Field: TField);
+    procedure DataSource_UnidadesDataChange(Sender: TObject; Field: TField);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  dmDesbravador: TdmDesbravador;
+
+implementation
+
+{%CLASSGROUP 'Vcl.Controls.TControl'}
+
+uses UEspecialidades, UUnidades, UDesbravadores, UClasses;
+
+{$R *.dfm}
+
+procedure TdmDesbravador.DataSource_DesbravadorDataChange(Sender: TObject; Field: TField);
+begin
+begin
+  frmDesbravadores.Btncancelar.Enabled := DataSource_Desbravador.State in [dsEdit, dsInsert];
+  frmDesbravadores.btnIncluir.Enabled := DataSource_Desbravador.State = dsBrowse;
+  frmDesbravadores.btnExcluir.Enabled := DataSource_Desbravador.DataSet.RecordCount > 0;
+  frmDesbravadores.btnSalvar.Enabled := DataSource_Desbravador.State in [dsEdit, dsInsert];
+end;
+end;
+
+procedure TdmDesbravador.DataSource_EspecialidadesDataChange(Sender: TObject; Field: TField);
+begin
+  frmEspecialidades.BtnIncluir.Enabled := DataSource_Especialidades.State = dsBrowse;
+  frmEspecialidades.btnSalvar.Enabled := DataSource_Especialidades.State in [dsInsert, dsEdit];
+  frmEspecialidades.btnCancelar.Enabled := DataSource_Especialidades.State in [dsInsert, dsEdit];
+  frmEspecialidades.btnExcluir.Enabled := DataSource_Especialidades.DataSet.RecordCount > 0;
+end;
+
+procedure TdmDesbravador.DataSource_UnidadesDataChange(Sender: TObject; Field: TField);
+begin
+  frmUnidades.btnIncluir.Enabled := DataSource_Unidades.DataSet.State = dsBrowse;
+  frmUnidades.btnSalvar.Enabled := DataSource_Unidades.DataSet.State in [dsInsert, dsEdit];
+  frmUnidades.btnCancelar.Enabled := DataSource_Unidades.DataSet.State in [dsInsert, dsEdit];
+  frmUnidades.btnExcluir.Enabled := DataSource_Unidades.DataSet.RecordCount > 0;
+end;
+
+end.
+

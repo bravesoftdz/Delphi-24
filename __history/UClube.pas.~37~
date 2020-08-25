@@ -1,0 +1,126 @@
+unit UClube;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, cxGraphics, cxControls, cxLookAndFeels, cxLookAndFeelPainters, dxSkinsCore,
+  dxSkinBlack, dxSkinBlue, dxSkinBlueprint, dxSkinCaramel, dxSkinCoffee, dxSkinDarkRoom, dxSkinDarkSide,
+  dxSkinDevExpressDarkStyle, dxSkinDevExpressStyle, dxSkinFoggy, dxSkinGlassOceans, dxSkinHighContrast, dxSkiniMaginary,
+  dxSkinLilian, dxSkinLiquidSky, dxSkinLondonLiquidSky, dxSkinMcSkin, dxSkinMetropolis, dxSkinMetropolisDark,
+  dxSkinMoneyTwins, dxSkinOffice2007Black, dxSkinOffice2007Blue, dxSkinOffice2007Green, dxSkinOffice2007Pink,
+  dxSkinOffice2007Silver, dxSkinOffice2010Black, dxSkinOffice2010Blue, dxSkinOffice2010Silver, dxSkinOffice2013DarkGray,
+  dxSkinOffice2013LightGray, dxSkinOffice2013White, dxSkinOffice2016Colorful, dxSkinOffice2016Dark, dxSkinPumpkin,
+  dxSkinSeven, dxSkinSevenClassic, dxSkinSharp, dxSkinSharpPlus, dxSkinSilver, dxSkinSpringTime, dxSkinStardust,
+  dxSkinSummer2008, dxSkinTheAsphaltWorld, dxSkinsDefaultPainters, dxSkinValentine, dxSkinVisualStudio2013Blue,
+  dxSkinVisualStudio2013Dark, dxSkinVisualStudio2013Light, dxSkinVS2010, dxSkinWhiteprint, dxSkinXmas2008Blue,
+  dxSkinscxPCPainter, dxBarBuiltInMenu, Vcl.StdCtrls, Vcl.ExtCtrls, cxPC, cxContainer, cxEdit, cxTextEdit, cxDBEdit,
+  cxMaskEdit, cxDropDownEdit, cxMemo, Vcl.ComCtrls, dxCore, cxDateUtils, cxCalendar, Vcl.Menus, cxButtons, cxImage,
+  cxButtonEdit, EdComboSQLFD, ACBrBase, ACBrEnterTab, ACBrSocket, ACBrCEP;
+type
+  TfrmClube = class(TForm)
+    PageControlPrincipal: TcxPageControl;
+    PanelTesouraria: TPanel;
+    LabelnomeCentral: TLabel;
+    LabelNome: TLabel;
+    TabSheetPrincipal: TcxTabSheet;
+    DBTextEditNome: TcxDBTextEdit;
+    LabelLink: TLabel;
+    DBTextEditLink: TcxDBTextEdit;
+    LabelReuniaoPrincipal: TLabel;
+    LabelHorario: TLabel;
+    DBTextEditHorario: TcxDBTextEdit;
+    LabelEndereco: TLabel;
+    DBTextEditBairro: TcxDBTextEdit;
+    LabelBairro: TLabel;
+    DBTextEditEndereco: TcxDBTextEdit;
+    LabelCEP: TLabel;
+    DBTextEditCEP: TcxDBTextEdit;
+    LabelEstado: TLabel;
+    DBTextEditEstado: TcxDBTextEdit;
+    LabelCidade: TLabel;
+    LabelDataFundacao: TLabel;
+    LabelHistorico: TLabel;
+    cxDBMemoHistorico: TcxDBMemo;
+    DBComboBoxReuniaoPrincipal: TcxDBComboBox;
+    DBTextEditIDClube: TcxDBTextEdit;
+    LabelIDClube: TLabel;
+    PanelBotoes: TPanel;
+    btnIncluir: TcxButton;
+    btnExcluir: TcxButton;
+    imgLogoClube: TcxImage;
+    ComboSQLFDMunicipio: TEdComboSQLFD;
+    btnSalvar: TcxButton;
+    btnCancelar: TcxButton;
+    TcxDtFundacao: TcxDBDateEdit;
+    ACBrEnterTab: TACBrEnterTab;
+    ACBrCEP: TACBrCEP;
+    procedure btnIncluirClick(Sender: TObject);
+    procedure btnSalvarClick(Sender: TObject);
+    procedure btnCancelarClick(Sender: TObject);
+    procedure btnExcluirClick(Sender: TObject);
+    procedure DBTextEditCEPExit(Sender: TObject);
+    procedure DBTextEditCEPEnter(Sender: TObject);
+    procedure ACBrCEPBuscaEfetuada(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frmClube: TfrmClube;
+
+implementation
+
+uses
+  dmDados;
+
+{$R *.dfm}
+
+procedure TfrmClube.ACBrCEPBuscaEfetuada(Sender: TObject);
+  var
+  i : Integer;
+begin
+  for i := 0 to ACBrCEP.Enderecos.Count -1 do
+    begin
+      ComboSQLFDMunicipio.Text := ACBrCEP.Enderecos[i].Municipio;
+      DBTextEditBairro.Text := ACBrCEP.Enderecos[i].Bairro;
+      DBTextEditEndereco.Text := ACBrCEP.Enderecos[i].Logradouro;
+      DBTextEditEstado.Text := ACBrCEP.Enderecos[i].UF;
+    end;
+end;
+
+procedure TfrmClube.btnCancelarClick(Sender: TObject);
+begin
+  dmDesbravador.DS_Clube.DataSet.Cancel;
+end;
+
+procedure TfrmClube.btnExcluirClick(Sender: TObject);
+begin
+  dmDesbravador.DS_Clube.DataSet.Delete;
+end;
+
+procedure TfrmClube.btnIncluirClick(Sender: TObject);
+begin
+  dmDesbravador.DS_Clube.DataSet.Close;
+  dmDesbravador.DS_Clube.DataSet.Open;
+  dmDesbravador.DS_Clube.DataSet.Insert;
+end;
+
+procedure TfrmClube.btnSalvarClick(Sender: TObject);
+begin
+  dmDesbravador.DS_Clube.DataSet.Post;
+end;
+
+procedure TfrmClube.DBTextEditCEPEnter(Sender: TObject);
+begin
+  ACBrCEP.BuscarPorCEP(DBTextEditCEP.Text);
+end;
+
+procedure TfrmClube.DBTextEditCEPExit(Sender: TObject);
+begin
+  ACBrCEP.BuscarPorCEP(DBTextEditCEP.Text);
+end;
+
+end.

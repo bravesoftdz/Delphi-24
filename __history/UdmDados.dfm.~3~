@@ -1,0 +1,123 @@
+object Form1: TForm1
+  Left = 0
+  Top = 0
+  Caption = 'Form1'
+  ClientHeight = 441
+  ClientWidth = 757
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  PixelsPerInch = 96
+  TextHeight = 13
+  object DataSource_Desbravador: TDataSource
+    DataSet = FDQueryDesbravador
+    Left = 70
+    Top = 16
+  end
+  object conDesbravador: TFDConnection
+    Params.Strings = (
+      'SERVER=DESKTOP-951TCIP\SQLEXPRESS'
+      'User_Name=sa'
+      'Password=sql123'
+      'ApplicationName=Architect'
+      'Workstation=DESKTOP-951TCIP'
+      'DATABASE=Sistema_Desbravador'
+      'MARS=yes'
+      'DriverID=MSSQL')
+    Connected = True
+    Left = 544
+    Top = 8
+  end
+  object FDQueryDesbravador: TFDQuery
+    Connection = conDesbravador
+    SQL.Strings = (
+      'SELECT * FROM Desbravador')
+    Left = 352
+    Top = 8
+  end
+  object DataSource_Unidades: TDataSource
+    DataSet = FDQueryUnidades
+    Left = 62
+    Top = 136
+  end
+  object conUnidades: TFDConnection
+    Params.Strings = (
+      'SERVER=DESKTOP-951TCIP\SQLEXPRESS'
+      'User_Name=sa'
+      'Password=sql123'
+      'ApplicationName=Architect'
+      'Workstation=DESKTOP-951TCIP'
+      'DATABASE=Sistema_Desbravador'
+      'MARS=yes'
+      'OSAuthent=No'
+      'DriverID=MSSQL')
+    Connected = True
+    Left = 544
+    Top = 136
+  end
+  object FDQueryUnidades: TFDQuery
+    Connection = conUnidades
+    SQL.Strings = (
+      'select * from Unidades')
+    Left = 348
+    Top = 136
+  end
+  object DataSource_Classes: TDataSource
+    DataSet = FDQueryClasses
+    Left = 62
+    Top = 232
+  end
+  object conClasses: TFDConnection
+    Params.Strings = (
+      'SERVER=DESKTOP-951TCIP\SQLEXPRESS'
+      'User_Name=sa'
+      'Password=sql123'
+      'ApplicationName=Architect'
+      'Workstation=DESKTOP-951TCIP'
+      'DATABASE=Sistema_Desbravador'
+      'MARS=yes'
+      'OSAuthent=No'
+      'DriverID=MSSQL')
+    Connected = True
+    Left = 544
+    Top = 232
+  end
+  object FDQueryClasses: TFDQuery
+    Connection = conClasses
+    SQL.Strings = (
+      'select * from classes')
+    Left = 348
+    Top = 232
+  end
+  object DataSource_Especialidades: TDataSource
+    DataSet = FDQueryEspecialidades
+    Left = 62
+    Top = 328
+  end
+  object FDQueryEspecialidades: TFDQuery
+    Connection = conEspecialidades
+    SQL.Strings = (
+      'select * from especialidades')
+    Left = 348
+    Top = 336
+  end
+  object conEspecialidades: TFDConnection
+    Params.Strings = (
+      'SERVER=DESKTOP-951TCIP\SQLEXPRESS'
+      'User_Name=sa'
+      'Password=sql123'
+      'ApplicationName=Architect'
+      'Workstation=DESKTOP-951TCIP'
+      'DATABASE=Sistema_Desbravador'
+      'MARS=yes'
+      'OSAuthent=No'
+      'DriverID=MSSQL')
+    Connected = True
+    Left = 544
+    Top = 344
+  end
+end

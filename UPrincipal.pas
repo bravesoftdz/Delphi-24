@@ -138,7 +138,7 @@ begin
   begin
     Exit;
   end
-  else
+  else                                        ////////////////// TESTE MERGE!!
   begin
     Abort;
   end;

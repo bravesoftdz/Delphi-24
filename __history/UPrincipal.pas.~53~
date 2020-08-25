@@ -50,6 +50,11 @@ type
     procedure btnSairClick(Sender: TObject);
     procedure btnRelatóriosClick(Sender: TObject);
     procedure btnTesourariaClick(Sender: TObject);
+    procedure btnSecretariaClick(Sender: TObject);
+    procedure btnPatrimoniosClick(Sender: TObject);
+    procedure btnFerramentasClick(Sender: TObject);
+    procedure btnmeuClubeClick(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
   private
     { Private declarations }
   public
@@ -62,7 +67,7 @@ var
 implementation
 
 uses
-  UTesouraria;
+  UTesouraria, USecretaria, UPatrimonios, UFerramentas, UClube;
 
 
 {$R *.dfm}
@@ -70,7 +75,7 @@ uses
 procedure TfrmPrincipal.btnClassesClick(Sender: TObject);
 begin
   try
-    frmClasses := TFrmClasses.Create(frmClasses);
+    frmClasses := TFrmClasses.Create(nil);
     frmClasses.ShowModal;
   finally
     FreeAndNil(frmClasses);
@@ -80,7 +85,7 @@ end;
 procedure TfrmPrincipal.btnDesbravadoresClick(Sender: TObject);
 begin
   try
-    frmDesbravadores := TfrmDesbravadores.Create(frmDesbravadores);
+    frmDesbravadores := TfrmDesbravadores.Create(nil);
     frmDesbravadores.ShowModal;
   finally
     FreeAndNil(frmDesbravadores);
@@ -90,16 +95,53 @@ end;
 procedure TfrmPrincipal.btnEspecialidadesClick(Sender: TObject);
 begin
   try
-    frmEspecialidades := TFrmEspecialidades.Create(frmEspecialidades);
+    frmEspecialidades := TFrmEspecialidades.Create(nil);
     frmEspecialidades.ShowModal;
   finally
     FreeAndNil(frmEspecialidades);
   end;
 end;
 
+procedure TfrmPrincipal.btnFerramentasClick(Sender: TObject);
+begin
+  try
+    frmFerramentas := TfrmFerramentas.Create(nil);
+    frmFerramentas.ShowModal;
+  finally
+    FreeAndNil(frmFerramentas);
+  end;
+end;
+
+procedure TfrmPrincipal.btnmeuClubeClick(Sender: TObject);
+begin
+  try
+    frmClube := TfrmClube.Create(nil);
+    frmClube.ShowModal;
+  finally
+    FreeAndNil(frmClube);
+  end;
+end;
+
+procedure TfrmPrincipal.btnPatrimoniosClick(Sender: TObject);
+begin
+  try
+    frmPatrimonios := TfrmPatrimonios.Create(nil);
+    frmPatrimonios.ShowModal;
+  finally
+    FreeAndNil(frmPatrimonios);
+  end;
+end;
+
 procedure TfrmPrincipal.btnRelatóriosClick(Sender: TObject);
 begin
-  ShowMessage('Em Desenvolvimento!');
+  if Application.MessageBox('Em Desenvolvimento!', 'Informação', MB_OK+MB_ICONWARNING) = mrYes then
+  begin
+    Exit;
+  end
+  else
+  begin
+    Abort;
+  end;
 end;
 
 procedure TfrmPrincipal.btnSairClick(Sender: TObject);
@@ -107,10 +149,20 @@ begin
   Close;
 end;
 
+procedure TfrmPrincipal.btnSecretariaClick(Sender: TObject);
+begin
+  try
+    frmSecretaria := TfrmSecretaria.Create(nil);
+    frmSecretaria.ShowModal;
+  finally
+    FreeAndNil(frmSecretaria);
+  end;
+end;
+
 procedure TfrmPrincipal.btnTesourariaClick(Sender: TObject);
 begin
   try
-    frmTesouraria := TfrmTesouraria.Create(frmUnidades);
+    frmTesouraria := TfrmTesouraria.Create(nil);
     frmTesouraria.ShowModal;
   finally
     FreeAndNil(frmTesouraria);
@@ -120,11 +172,17 @@ end;
 procedure TfrmPrincipal.btnUnidadesClick(Sender: TObject);
 begin
   try
-    frmUnidades := TfrmUnidades.Create(frmUnidades);
+    frmUnidades := TfrmUnidades.Create(nil);
     frmUnidades.ShowModal;
   finally
     FreeAndNil(frmUnidades);
   end;
+end;
+
+procedure TfrmPrincipal.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  Action := caFree;
+  frmPrincipal := nil;
 end;
 
 end.
